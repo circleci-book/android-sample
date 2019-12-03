@@ -10,10 +10,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build test and lint
+          name: Test and lint
           command: |
             cd todoapp
             ./gradlew assemble lint test
+
+      - run:
+          name: Build debug APK and release APK
+          command: |
+            cd todoapp
+            ./gradlew assembleMockDebug assembleMockDebugAndroidTest
+
       - run:
           name: Save test results
           command: |
