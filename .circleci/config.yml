@@ -13,7 +13,7 @@ jobs:
           name: Test and lint
           command: |
             cd todoapp
-            ./gradlew assemble lint test
+            ./gradlew lint test
 
       - run:
           name: Build debug APK and release APK
