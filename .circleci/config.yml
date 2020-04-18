@@ -3,7 +3,6 @@ jobs:
   build_and_setup:
     docker:
       - image: circleci/android:api-28-alpha
-    resource_class: small
     working_directory: ~/project
     environment:
       - GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2
@@ -40,6 +39,7 @@ jobs:
   run_ftl:
     docker:
       - image: circleci/android:api-28-alpha
+    resource_class: small
     working_directory: ~/project
     steps:
       - attach_workspace:
