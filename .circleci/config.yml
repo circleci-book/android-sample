@@ -10,19 +10,19 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Test and lint
+          name: テストと静的解析
           command: |
             cd todoapp
             ./gradlew lint test
 
       - run:
-          name: Build debug APK and release APK
+          name: デバッグとリリース向けAPKのビルド
           command: |
             cd todoapp
             ./gradlew assembleMockDebug assembleMockDebugAndroidTest
 
       - run:
-          name: Save test results
+          name: テストレポートの作成
           command: |
             mkdir -p ~/junit/
             find . -type f -regex "./todoapp/.*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
@@ -45,13 +45,13 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Authorize gcloud and set config defaults
+          name: gcloudの認証とコンフィグのデフォルト設定
           command: |
             echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/gcloud-service-key.json
             sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
             sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run:
-          name: Test with Firebase Test Lab
+          name: Firebase Test Labでテスト実行
           command: |
             BUILD_DIR=build_${CIRCLE_BUILD_NUM}
             sudo gcloud firebase test android run \
@@ -60,7 +60,7 @@ jobs:
               --results-bucket cloud-test-${GOOGLE_PROJECT_ID}-blueprints \
               --results-dir=${BUILD_DIR}
       - run:
-          name: Download results
+          name: テスト結果のダウンロード
           command: |
             BUILD_DIR=build_${CIRCLE_BUILD_NUM}
             sudo pip install -U crcmod
