@@ -51,7 +51,7 @@ jobs:
             sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
             sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run:
-          name: Firebase Test Labでテスト実行
+          name: Test Labでテスト実行
           command: |
             BUILD_DIR=build_${CIRCLE_BUILD_NUM}
             sudo gcloud firebase test android run \
